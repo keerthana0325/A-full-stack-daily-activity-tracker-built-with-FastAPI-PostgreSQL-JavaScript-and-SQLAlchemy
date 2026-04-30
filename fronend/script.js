@@ -73,6 +73,7 @@ table += `
   <th>Activity</th>
   <th>Category</th>
   <th>Status</th>
+  <th>Actions</th>
 </tr>
 `;
 
@@ -85,6 +86,10 @@ data.entries.forEach(function(entry) {
     <td>${entry.title}</td>
     <td>${entry.category}</td>
     <td>${status}</td>
+    <td>
+      <button onclick="editEntry(${entry.id})">Edit</button>
+      <button onclick="deleteEntry(${entry.id})">Delete</button>
+    </td>
   </tr>
   `;
 });
@@ -128,3 +133,64 @@ viewStatsButton.addEventListener("click", function() {
       }
     });
 });
+
+function deleteEntry(id) {
+  fetch(`http://127.0.0.1:8000/entries/${id}`, {
+    method: "DELETE"
+  })
+  .then(response => response.json())
+  .then(data => {
+    // console.log("Success:", data);
+    const popup = document.getElementById("popup");
+popup.innerText = data.message;
+popup.style.display = "block";
+
+setTimeout(() => {
+  popup.style.display = "none";
+}, 2000);
+    // Refresh the habits list
+    viewHabitsButton.click();
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+}
+
+function editEntry(id) {
+  // For simplicity, we'll just prompt the user for new values
+  const newTitle = prompt("Enter new title:");
+  const newCategory = prompt("Enter new category:");
+  const newDidIt = confirm("Did you complete this habit?"); 
+  const newNotes = prompt("Enter new notes:");
+
+  const updatedHabit = {
+    title: newTitle || undefined, // Use existing value if user cancels
+    category: newCategory || undefined,
+    did_it: newDidIt || undefined,
+    notes: newNotes || undefined
+  };
+
+  fetch(`http://127.0.0.1:8000/entries/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(updatedHabit)
+  })
+  .then(response => response.json())
+  .then(data => {
+    const popup = document.getElementById("popup");
+popup.innerText = data.message;
+popup.style.display = "block";
+
+setTimeout(() => {
+  popup.style.display = "none";
+}, 2000);
+    //console.log("Success:", data);
+    // Refresh the habits list
+    viewHabitsButton.click();
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+}
