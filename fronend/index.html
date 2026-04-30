@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>daily_tracker</title>
+    <style> 
+    h2{
+    text-align: center;
+
+    }
+        body {
+            background-color: lavenderblush;
+            padding: 20px;
+        }
+        form{
+            background-color: thistle;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+margin: 0 auto;
+        }
+        
+    label {
+    display: inline-block;
+    width: 150px;
+    font-weight: bold;
+}
+
+
+input, select, textarea {
+    display: inline-block;
+    margin-top: 5px;
+}
+ .field {
+    margin-bottom: 15px;
+
+ }
+ .field input[type="checkbox"] {
+    display: inline;
+    margin-left: 5px;
+    width: auto;
+}
+button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background-color: #6c5b7b;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+button:hover {
+    background-color: #5a4a66;
+}
+.actions {
+    margin-top: 20px;   
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    background-color: #6c5b7b;
+    color: white;
+    padding: 8px;
+}
+
+td {
+    padding: 8px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2eaf4;
+}
+.popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #6c5b7b;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: none;
+    z-index: 1000;
+}
+    </style>
+</head>
+<body>
+<h2>Track your habits</h2>
+<form id="habit-form">
+    <div class="field">
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+    </div>
+    <div class="field">
+    <label for="title">Activity name:</label>
+    <input type="text" id="title" name="title" required>
+    </div>
+    <div class="field">
+    <label for = "category">Category:</label>
+    <select id="category" name="category" required>
+        <option value="">Select a category</option>
+        <option value="health">Health</option>
+        <option value="learning">Learning</option>
+        <option value="work">Work</option>
+        <option value="misc">Miscellaneous</option>
+    </select>
+    </div>
+    <div class="field">
+    <label for="did_it">Did you do it?</label>
+    <input type="checkbox" id="did_it" name="did_it">
+    </div>
+    <div class="field">
+    <label for="notes">Notes: </label>
+    <textarea id="notes" name="notes"></textarea>
+    </div>
+    <button type="submit">Add Habit</button>
+
+</form>
+<p id="message"></p>
+<div class="actions">
+<button id="view-habits">View Habits</button>
+<div id="habits-list"></div>
+
+<button id="view-stats">View Stats</button>
+<div id="stats"></div>
+</div>
+<div id="popup" class="popup"></div>
+<script src="script.js"></script>
+</body>
+</html>
